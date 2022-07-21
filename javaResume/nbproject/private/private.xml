@@ -5,7 +5,7 @@
             <url>src/javaresume/Frame1.java</url>
             <bookmark id="1">
                 <name/>
-                <line>664</line>
+                <line>690</line>
                 <key/>
             </bookmark>
         </file>
@@ -14,6 +14,7 @@
         <group>
             <file>file:/C:/Users/matth/OneDrive/other/Documents/GitHub/Path-Finding-Algorithms/javaResume/src/javaresume/MazeGenerator.java</file>
             <file>file:/C:/Users/matth/OneDrive/other/Documents/GitHub/Path-Finding-Algorithms/javaResume/src/javaresume/Frame1.java</file>
+            <file>file:/C:/Users/matth/OneDrive/other/Documents/GitHub/Path-Finding-Algorithms/javaResume/src/javaresume/PathFinder.java</file>
         </group>
     </open-files>
 </project-private>

@@ -49,7 +49,7 @@ public class MazeGenerator implements Runnable {
     // sleep function slows the pathing so we can see it.
     private void mySleep() {
         try {
-            Thread.sleep(50);
+            Thread.sleep(20);
 
         } catch (InterruptedException ex) {
             Logger.getLogger(Frame1.class.getName()).log(Level.SEVERE, null, ex);

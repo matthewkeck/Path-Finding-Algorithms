@@ -19,6 +19,7 @@ import javax.swing.Timer;
  * @author matth
  */
 public class Clock extends JComponent {
+    // varables for the clock class
     Timer myTimer;
     int time = 0;
     int noCount = 0;
@@ -29,6 +30,7 @@ public class Clock extends JComponent {
 
     }
 
+    // getters and setters for the clock class
     public void setMyPath(int myPath) {
         this.myPath = myPath;
     }
@@ -46,6 +48,7 @@ public class Clock extends JComponent {
         repaint();
     }
     
+    // function starts the timer
     public boolean Start(){
         
         // set time to the slider
@@ -76,6 +79,7 @@ public class Clock extends JComponent {
    public void paintComponent(Graphics g){
        super.paintComponent(g);
         
+       // paints the time the algorithm takes the nodes searcd and the length of the path found
         String Timer = "Time : " + time;
         String nodeCounter = "Node Count : " + noCount;
         String pathLength = "Path Length : " + myPath;
@@ -83,6 +87,7 @@ public class Clock extends JComponent {
         g.setColor(Color.white);
         g.setFont(myFont);
         
+        // draws them to the skreen at a spacific location
         g.drawString(Timer,0,50);
         g.drawString(nodeCounter,0,100);
         g.drawString(pathLength,0,150);

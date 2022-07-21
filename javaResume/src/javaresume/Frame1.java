@@ -54,6 +54,7 @@ public class Frame1 extends javax.swing.JFrame {
         
         createEmptyBoard();
 
+        // adding path finding algorithms to the combo boxes for the user to select
         jComboBoxBoardOne.removeAllItems();
         jComboBoxBoardOne.addItem("Depth Algorithm");
         jComboBoxBoardOne.addItem("Breadth Algorithm");
@@ -64,12 +65,14 @@ public class Frame1 extends javax.swing.JFrame {
         jComboBoxBoardTwo.addItem("Breadth Algorithm");
         jComboBoxBoardTwo.addItem("A Star");
 
+        // adding maze generating algorithms to the combo boxes for the user to select
         jComboBoxMazeSelect.removeAllItems();
         jComboBoxMazeSelect.addItem("Empty Maze");
         jComboBoxMazeSelect.addItem("Open Maze");
         jComboBoxMazeSelect.addItem("Depth First Maze");
         jComboBoxMazeSelect.addItem("Recursive Division Maze");
 
+        // ads the lables and clockes to the frame
         myClock.setSize(500, 200);
         myClock.setLocation(65, 65);
         myClock.setVisible(true);
@@ -175,6 +178,8 @@ public class Frame1 extends javax.swing.JFrame {
         jRadioButtonObstical = new javax.swing.JRadioButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
+        jMenuItemReturnMenu = new javax.swing.JMenuItem();
+        jMenuItemExit = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -367,6 +372,25 @@ public class Frame1 extends javax.swing.JFrame {
         jMenuBar1.setForeground(new java.awt.Color(255, 255, 255));
 
         jMenu1.setText("File");
+
+        jMenuItemReturnMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_M, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        jMenuItemReturnMenu.setText("retrun to menu");
+        jMenuItemReturnMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemReturnMenuActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItemReturnMenu);
+
+        jMenuItemExit.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Q, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        jMenuItemExit.setText("exit");
+        jMenuItemExit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemExitActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItemExit);
+
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Edit");
@@ -436,6 +460,7 @@ public class Frame1 extends javax.swing.JFrame {
 
         jlbPath.setText("");
 
+        // for loop resets all nodes that changed to green or yellow back to white
         for (int i = 0; i < mazeArray.length; i++) {
             for (int j = 0; j < mazeArray[i].length; j++) {
 
@@ -480,6 +505,7 @@ public class Frame1 extends javax.swing.JFrame {
         endCounter = 0;
         path.clear();
 
+        // if else statatment to select which maze to style the user has selected
         if (jComboBoxMazeSelect.getSelectedIndex() == 0) {
             createEmptyBoard();
         } else {
@@ -664,6 +690,21 @@ public class Frame1 extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jPanelBoardOneMouseDragged
 
+    private void jMenuItemExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemExitActionPerformed
+        // allows the user to exit
+        System.exit(0);
+    }//GEN-LAST:event_jMenuItemExitActionPerformed
+
+    private void jMenuItemReturnMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemReturnMenuActionPerformed
+        // allows the user to return to menu
+        menuFrame menu = new menuFrame();
+
+        menu.setLocationRelativeTo(null);
+        menu.setVisible(true);
+
+        this.dispose();
+    }//GEN-LAST:event_jMenuItemReturnMenuActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -709,6 +750,8 @@ public class Frame1 extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItemExit;
+    private javax.swing.JMenuItem jMenuItemReturnMenu;
     private javax.swing.JPanel jPanelBackground;
     private javax.swing.JLayeredPane jPanelBoardOne;
     private javax.swing.JLayeredPane jPanelBoardTwo;

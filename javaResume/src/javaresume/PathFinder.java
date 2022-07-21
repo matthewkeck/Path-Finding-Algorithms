@@ -16,6 +16,9 @@ import java.util.*;
  *
  * @author matth
  */
+
+// pathfinder class creates a thread and then calls a path finding aglorithm that finds the solution to the maze while displaying its node
+// searches to the user
 public class PathFinder implements Runnable {
 
     Clock myClock;
@@ -28,6 +31,7 @@ public class PathFinder implements Runnable {
     int userSelection;
     int nodeCount = 0;
 
+    // consturctor for the pathFinder class
     public PathFinder(Node[][] mazeArrayTemp, ArrayList<Node> path, Node start, Node end, int userSelection, Clock myClock) {
         this.myClock = myClock;
         this.mazeArrayTemp = mazeArrayTemp;
@@ -37,22 +41,30 @@ public class PathFinder implements Runnable {
         this.userSelection = userSelection;
     }
 
+    // run function allows us to create threads so we can run to algorithms at the same time
     @Override
     public void run() {
 
+        // if else statments determin the algorithm the user selected
         if (userSelection == 0) {
+            // starts the clock class to time the algorithm count the nodes and count the path length
             myClock.Start();
+            // calls the depth first search algorithm
             if (deapthSearch(start, mazeArrayTemp) == true) {
 
                 drawPath();
             }
             myClock.Stop();
 
-        } else if (userSelection == 2) {
+        } 
+        // calss the a star algorithm
+        else if (userSelection == 2) {
             myClock.Start();
             aStar(start, end, mazeArrayTemp);
             myClock.Stop();
-        } else {
+        } 
+        // calls the breadth search algorthim
+        else {
             myClock.Start();
             breadthSearch(start, mazeArrayTemp);
             myClock.Stop();
@@ -70,17 +82,22 @@ public class PathFinder implements Runnable {
         }
     }
 
+    // g cost function is how far the searched node is from the start. function we use manhatten distatnce
     private int gCost(int x, int y) {
         int distance;
         return distance = Math.abs(start.getNodeColPosition() - x) + Math.abs((start.getNodeRowPosition() - y));
     }
 
+    // h cost function is how far the searched node is from the goal. we use manhatten distatnce
     private int hCost(int x, int y) {
         int distance;
         return distance = Math.abs(end.getNodeColPosition() - x) + Math.abs((end.getNodeRowPosition() - y));
     }
 
+    // a star algorithm knows were the end node is and priorites the nodes with the lowest f to be searched first
+    // a star algorithm finds a short path while checking fewernodes then breadth first search
     private void aStar(Node current, Node end, Node[][] mazeArrayTemp) {
+        // two arraylist for searched and non-searched nodes
         ArrayList<Node> openNodes = new ArrayList<Node>();
         ArrayList<Node> closedNodes = new ArrayList<Node>();
 
@@ -91,48 +108,63 @@ public class PathFinder implements Runnable {
         int gCost;
         int fCost;
 
+        // gets teh nodes position in the array
         x = current.getNodeColPosition();
         y = current.getNodeRowPosition();
 
+        // sets the g h and f cost
         current.sethCost(hCost(x, y));
         current.setgCost(gCost(x, y));
         current.setfCost();
 
+        // adds node to open nodes list
         openNodes.add(current);
 
+        // searches tell there are no nodes in the open list or the goal has been reached
         while (!openNodes.isEmpty() && goal == false) {
+            // sets current node equal to the first node in the open list
             current = openNodes.get(0);
             mySleep();
 
+            // for loop finds the node with the loest f cost in the open list
             for (int i = 0; i < openNodes.size(); i++) {
                 if (openNodes.get(i).getfCost() < current.getfCost() || openNodes.get(i).getfCost() == current.getfCost() && openNodes.get(i).getgCost() < current.gethCost()) {
                     current = openNodes.get(i);
                 }
 
             }
+            // adds the node to the searched list and removes it form the open list
             closedNodes.add(current);
             openNodes.remove(current);
 
-            // Left
+            // searches left of the current node if statment checks if it is avalid path or if it hass been searched already
             if (mazeArrayTemp[current.getNodeRowPosition()][current.getNodeColPosition() - 1] != null
                     && !mazeArrayTemp[current.getNodeRowPosition()][current.getNodeColPosition() - 1].getPieceColor().equals(Color.black)
                     && !closedNodes.contains(mazeArrayTemp[current.getNodeRowPosition()][current.getNodeColPosition() - 1])) {
 
                 current.left = mazeArrayTemp[current.getNodeRowPosition()][current.getNodeColPosition() - 1];
+                // finds the popition fo the left node in the array
                 x = current.left.getNodeColPosition();
                 y = current.left.getNodeRowPosition();
 
+                // sets its g cost
                 gCost = current.getgCost() + 1;
 
+                // if the new gCost is less then an old gCost calulated then we save the new gCost
+                // recalulate the fCost and save the new parent of the left node
                 if (!openNodes.contains(current.left) || gCost < current.gCost) {
                     current.left.setgCost(gCost);
                     current.left.setfCost();
                     current.left.parent = current;
 
+                    // if open nodes does not contain the left node calculate the h cost and recalculate the f cost
+                    // and add the left node to the open list
                     if (!openNodes.contains(current.left)) {
                         current.left.sethCost(hCost(x, y));
                         current.left.setfCost();
                         openNodes.add(current.left);
+                        // checks if the left node is not the goal node and paint the node green adds to the searched node count
+                        // and sets the clock to display the node count
                         if (!current.left.getPieceColor().equals(Color.blue)) {
                             current.left.setPieceColor(Color.green);
                             nodeCount += 1;
@@ -233,6 +265,8 @@ public class PathFinder implements Runnable {
 
             }
 
+            // checks if the current node is the goal node and if so call the function
+            // to paint the path and sets goal equal to true to stop the loop
             if (current.getPieceColor().equals(Color.blue)) {
                 goal = true;
                 recontructPath(current);
@@ -405,7 +439,6 @@ public class PathFinder implements Runnable {
             current = current.parent;
 
         }
-        System.out.println(counter);
         current.setPieceColor(Color.yellow);
         counter++;
         myClock.setMyPath(counter);

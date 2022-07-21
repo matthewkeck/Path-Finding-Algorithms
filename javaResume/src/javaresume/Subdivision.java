@@ -9,7 +9,12 @@ package javaresume;
  *
  * @author matth
  */
+
+// subdivion class is used by the recursive divison maze generation algorithm to keep track of the hight width upper and lower bouncs of each subdivion
+// of the original array
 public class Subdivision {
+    
+    // varables for the subdivion class
     int upperWidth;
     int lowerWidth;
     
@@ -21,9 +26,11 @@ public class Subdivision {
     
     int invalidMove;
 
+    // empty constructior because we dont need info to instatncate
     public Subdivision() {
     }
 
+    // getters and setters for the subdivion class
     public int getHieght() {
         return hieght;
     }
